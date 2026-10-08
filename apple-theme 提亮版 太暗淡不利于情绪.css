@@ -1,0 +1,812 @@
+/* ============================================================================
+   Apple-style theme v5 - fills carry the boundaries, no strokes.
+   Only colors, fills, radii and shadows change here. Nothing touches
+   pointer-events, display, visibility, position or z-index, so buttons
+   keep working exactly as before.
+   ========================================================================== */
+
+/* 1. Palette */
+:root:root:root {
+  --background: #ffffff !important;
+  --foreground: #1d1d1f !important;
+  --card: #ffffff !important;
+  --card-foreground: #1d1d1f !important;
+  --popover: #ffffff !important;
+  --popover-foreground: #1d1d1f !important;
+  --primary: #0071e3 !important;
+  --primary-foreground: #ffffff !important;
+  --secondary: #f5f5f7 !important;
+  --secondary-foreground: #1d1d1f !important;
+  --muted: #f5f5f7 !important;
+  --muted-foreground: #6e6e73 !important;
+  --accent: #ececee !important;
+  --accent-foreground: #1d1d1f !important;
+  --destructive: #e30000 !important;
+  --border: #e5e5ea !important;
+  --input: #e5e5ea !important;
+  --ring: #8e8e93 !important;
+  --radius: 0.75rem !important;
+  --sidebar: #f5f5f7 !important;
+  --sidebar-foreground: #1d1d1f !important;
+  --sidebar-primary: #0071e3 !important;
+  --sidebar-primary-foreground: #ffffff !important;
+  --sidebar-accent: #e8e8ea !important;
+  --sidebar-accent-foreground: #1d1d1f !important;
+  --sidebar-border: transparent !important;
+  --sidebar-ring: #8e8e93 !important;
+  --fill-ctl: #f0f0f3;
+  --fill-ctl-hover: #e7e7eb;
+  --switch-off: #e4e4ea;
+  --switch-off-hover: #d9d9e0;
+  --fill-head: #fafafa;
+  --fill-band: #f8f8fa;
+  --fill-row-hover: rgb(0 0 0 / 3%);
+  --card-shadow: 0 1px 3px rgb(0 0 0 / 5%), 0 10px 28px -6px rgb(0 0 0 / 9%);
+  --cm-fill: #f5f5f7;
+  --cm-fill-hover: #f1f1f3;
+  --cm-fill-focus: #f3f3f5;
+  --cm-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+  --cm-shadow-hover: 0 1px 3px rgb(0 0 0 / 4%);
+  --cm-shadow-focus: 0 1px 3px rgb(0 0 0 / 5%), 0 4px 16px rgb(0 0 0 / 6%);
+  color-scheme: light;
+}
+:root:root:root.dark {
+  --background: #1d1d1f !important;
+  --foreground: #f5f5f7 !important;
+  --card: #232325 !important;
+  --card-foreground: #f5f5f7 !important;
+  --popover: #2a2a2c !important;
+  --popover-foreground: #f5f5f7 !important;
+  --primary: #0a84ff !important;
+  --primary-foreground: #ffffff !important;
+  --secondary: #2a2a2c !important;
+  --secondary-foreground: #f5f5f7 !important;
+  --muted: #2a2a2c !important;
+  --muted-foreground: #a1a1a6 !important;
+  --accent: #363638 !important;
+  --accent-foreground: #f5f5f7 !important;
+  --border: #3a3a3c !important;
+  --input: #3a3a3c !important;
+  --ring: #98989d !important;
+  --sidebar: #161618 !important;
+  --sidebar-foreground: #f5f5f7 !important;
+  --sidebar-primary: #0a84ff !important;
+  --sidebar-primary-foreground: #ffffff !important;
+  --sidebar-accent: #2c2c2e !important;
+  --sidebar-accent-foreground: #f5f5f7 !important;
+  --sidebar-border: transparent !important;
+  --sidebar-ring: #98989d !important;
+  --fill-ctl: #2d2d30;
+  --fill-ctl-hover: #3a3a3d;
+  --switch-off: #3a3a3e;
+  --switch-off-hover: #454549;
+  --fill-head: #26262a;
+  --fill-band: #2a2a2c;
+  --fill-row-hover: rgb(255 255 255 / 5%);
+  --card-shadow: 0 1px 3px rgb(0 0 0 / 35%), 0 10px 28px -6px rgb(0 0 0 / 45%);
+  --cm-fill: #2a2a2c;
+  --cm-fill-hover: #303032;
+  --cm-fill-focus: #2d2d2f;
+  --cm-shadow: 0 1px 2px rgb(0 0 0 / 20%);
+  --cm-shadow-hover: 0 1px 3px rgb(0 0 0 / 24%);
+  --cm-shadow-focus: 0 1px 3px rgb(0 0 0 / 26%), 0 4px 16px rgb(0 0 0 / 30%);
+  color-scheme: dark;
+}
+
+/* 2. Base */
+:root:root:root body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+:root:root:root ::selection { background: rgb(0 113 227 / 18%) !important; }
+:root:root:root.dark ::selection { background: rgb(10 132 255 / 30%) !important; }
+:root:root:root body :where(button, a, [role="tab"], [role="menuitem"], [role="option"]):focus-visible {
+  outline: 2px solid var(--ring) !important;
+  outline-offset: 2px !important;
+}
+:root:root:root body input[type="checkbox"],
+:root:root:root body input[type="radio"] { accent-color: var(--primary); }
+
+/* 2b. Safety guard. This webview can freeze a live background swap when the
+   element transitions background-color, leaving a switch stuck old-colored.
+   State-bearing controls therefore do not transition. */
+:root:root:root body :where([data-slot="button"], [data-slot="tabs-trigger"], [data-slot="agent-pill"], [data-slot="checkbox"], [role="switch"], [role="combobox"], [data-slot="select-trigger"], .browser-tab-content, aside button, button[aria-pressed]:not([data-slot])) {
+  transition: none !important;
+}
+
+/* 3. Window chrome */
+:root:root:root body .ws-chrome-border { border-color: transparent !important; }
+
+/* 4. Controls: fill instead of stroke */
+:root:root:root body [data-variant="outline"] {
+  background: var(--fill-ctl) !important;
+  border-color: transparent !important;
+}
+:root:root:root body [data-variant="outline"]:not([disabled]):hover {
+  background: var(--fill-ctl-hover) !important;
+}
+:root:root:root body :where([data-slot="input"], [data-slot="textarea"], [data-slot="select-trigger"], [role="combobox"]) {
+  background: var(--fill-ctl) !important;
+  border-color: transparent !important;
+}
+:root:root:root body [data-slot="badge"] {
+  background: var(--fill-ctl) !important;
+  border-color: transparent !important;
+}
+:root:root:root body [data-slot="checkbox"] { border-color: transparent !important; }
+:root:root:root body [data-slot="checkbox"]:not([data-state="checked"]):not([data-state="indeterminate"]) {
+  background: var(--switch-off) !important;
+}
+:root:root:root body [role="switch"] { border-color: transparent !important; }
+:root:root:root body [role="switch"]:not([aria-checked="true"]) {
+  background: var(--switch-off) !important;
+}
+:root:root:root body [role="switch"]:not([aria-checked="true"]):not([disabled]):hover {
+  background: var(--switch-off-hover) !important;
+}
+:root:root:root body [role="switch"][aria-checked="true"] {
+  background: var(--primary) !important;
+}
+/* Selectable tiles keep their selection through a tinted fill and a soft ring. */
+:root:root:root body button[aria-pressed="false"]:not([data-slot]) {
+  background: var(--fill-ctl) !important;
+  border-color: transparent !important;
+}
+:root:root:root body button[aria-pressed="false"]:not([data-slot]):hover {
+  background: var(--fill-ctl-hover) !important;
+}
+:root:root:root body button[aria-pressed="true"]:not([data-slot]) {
+  background: rgb(0 0 0 / 8%) !important;
+  border-color: transparent !important;
+}
+:root:root:root.dark body button[aria-pressed="true"]:not([data-slot]) {
+  background: rgb(255 255 255 / 14%) !important;
+}
+
+/* 5. Cards and data tables: fills only */
+:root:root:root body [class~="bg-card"][class~="border"] {
+  border-color: transparent !important;
+  box-shadow: var(--card-shadow) !important;
+}
+:root:root:root body [class~="bg-muted/30"][class~="border"] { border-color: transparent !important; }
+:root:root:root body table,
+:root:root:root body table th,
+:root:root:root body table td,
+:root:root:root body table tr { border-color: transparent !important; }
+:root:root:root body table thead th { background: var(--fill-head) !important; }
+:root:root:root body table tbody tr:hover td:not([class~="bg-muted/30"]),
+:root:root:root body table tbody tr:hover th:not([class~="bg-muted/30"]) {
+  background: var(--fill-row-hover) !important;
+}
+:root:root:root body table [class~="bg-muted/30"] { background: var(--fill-band) !important; }
+:root:root:root body kbd,
+:root:root:root body :not(pre) > code {
+  background: var(--fill-ctl) !important;
+  border-color: transparent !important;
+}
+
+/* 6. Sidebar */
+:root:root:root body aside {
+  background: var(--sidebar) !important;
+  border-color: transparent !important;
+}
+:root:root:root body .ws-surface-sidebar,
+:root:root:root body .ws-surface-muted { background: var(--sidebar) !important; }
+:root:root:root body aside button[class*="rounded-full"][class~="w-full"],
+:root:root:root body aside button[class*="bg-input"] {
+  border-radius: 10px !important;
+  border-color: transparent !important;
+}
+:root:root:root body aside button[class*="bg-input"] { background: rgb(0 0 0 / 4%) !important; }
+:root:root:root body aside button[class*="bg-input"]:hover { background: rgb(0 0 0 / 7.5%) !important; }
+:root:root:root.dark body aside button[class*="bg-input"] { background: rgb(255 255 255 / 6%) !important; }
+:root:root:root.dark body aside button[class*="bg-input"]:hover { background: rgb(255 255 255 / 11%) !important; }
+
+/* 7. Session tabs */
+:root:root:root body .browser-tab-content { border-radius: 10px 10px 0 0 !important; }
+:root:root:root body .browser-tab-item[data-active="true"] .browser-tab-content { background: var(--background) !important; }
+:root:root:root body .browser-tab-item:not([data-active="true"]):hover .browser-tab-content { background: rgb(0 0 0 / 4%) !important; }
+:root:root:root body .browser-tab-hover::before { background: none !important; }
+:root:root:root.dark body .browser-tab-item[data-active="true"] .browser-tab-content { background: var(--background) !important; }
+:root:root:root.dark body .browser-tab-item:not([data-active="true"]):hover .browser-tab-content { background: rgb(255 255 255 / 7%) !important; }
+
+/* 8. Segmented tabs */
+:root:root:root body [data-slot="tabs-list"][data-variant="default"] {
+  background: var(--muted) !important;
+  border-color: transparent !important;
+  border-radius: 999px !important;
+  padding: 4px !important;
+}
+:root:root:root body [data-slot="tabs-trigger"] { border-radius: 999px !important; font-weight: 500 !important; }
+:root:root:root body [data-slot="tabs-trigger"][data-state="active"] {
+  background: var(--background) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%) !important;
+}
+:root:root:root.dark body [data-slot="tabs-trigger"][data-state="active"] {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 45%) !important;
+}
+
+/* 9. Agent pills */
+:root:root:root body div:has(> [data-slot="agent-pill"]) {
+  border-color: transparent !important;
+  background: var(--fill-head) !important;
+}
+:root:root:root body [data-slot="agent-pill"] { font-weight: 500 !important; }
+:root:root:root body [data-slot="agent-pill"]:hover { background: var(--fill-ctl) !important; }
+:root:root:root body [data-slot="agent-pill"][aria-pressed="true"] {
+  background: var(--background) !important;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 8%) !important;
+}
+:root:root:root.dark body [data-slot="agent-pill"][aria-pressed="true"] {
+  box-shadow: 0 1px 3px rgb(0 0 0 / 40%) !important;
+}
+
+/* 10. Hero skill cards */
+:root:root:root body [role="tabpanel"] button[title="技能未启用"] {
+  background: var(--fill-head) !important;
+  border-color: transparent !important;
+  border-radius: 14px !important;
+  padding: 14px 16px !important;
+}
+:root:root:root body [role="tabpanel"] button[title="技能未启用"]:hover {
+  background: var(--fill-band) !important;
+}
+
+/* 11. Composer (message input) */
+:root:root:root body div:has(>.codeg-composer-chrome) { overflow: visible !important; }
+:root:root:root body .codeg-composer-chrome {
+  background: var(--cm-fill) !important;
+  border-color: transparent !important;
+  border-radius: 22px !important;
+  outline: none !important;
+  box-shadow: var(--cm-shadow) !important;
+  transition: none !important;
+}
+:root:root:root body .codeg-composer-chrome:hover {
+  background: var(--cm-fill-hover) !important;
+  box-shadow: var(--cm-shadow-hover) !important;
+}
+:root:root:root body .codeg-composer-chrome:focus-within {
+  background: var(--cm-fill-focus) !important;
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: var(--cm-shadow-focus) !important;
+}
+:root:root:root body .codeg-composer-scroll { padding: 18px 22px 10px !important; }
+:root:root:root body .codeg-composer-content { caret-color: var(--foreground); }
+:root:root:root body .codeg-composer-content p.is-editor-empty::before { color: #86868b !important; }
+:root:root:root.dark body .codeg-composer-content p.is-editor-empty::before { color: #8e8e93 !important; }
+:root:root:root body .codeg-composer-chrome button[title="发送"] { border-radius: 9999px !important; }
+:root:root:root body .codeg-composer-chrome .codeg-composer-content,
+:root:root:root body .codeg-composer-chrome .codeg-composer-content:focus,
+:root:root:root body .codeg-composer-chrome .codeg-composer-content:focus-visible {
+  border-color: transparent !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* 12. Floating surfaces */
+:root:root:root body [role="dialog"],
+:root:root:root body [data-slot="popover-content"],
+:root:root:root body [data-slot="dropdown-menu-content"],
+:root:root:root body [data-slot="context-menu-content"],
+:root:root:root body [data-slot="select-content"],
+:root:root:root body [data-sonner-toast] {
+  border-color: transparent !important;
+  border-radius: 16px !important;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 12%) !important;
+}
+:root:root:root.dark body [role="dialog"],
+:root:root:root.dark body [data-slot="popover-content"],
+:root:root:root.dark body [data-slot="dropdown-menu-content"],
+:root:root:root.dark body [data-slot="context-menu-content"],
+:root:root:root.dark body [data-slot="select-content"],
+:root:root:root.dark body [data-sonner-toast] {
+  box-shadow: 0 12px 40px rgb(0 0 0 / 55%) !important;
+}
+
+/* 13. Scrollbars */
+:root:root:root body ::-webkit-scrollbar { width: 10px; height: 10px; background: transparent; }
+:root:root:root body ::-webkit-scrollbar-track,
+:root:root:root body ::-webkit-scrollbar-corner { background: transparent; }
+:root:root:root body ::-webkit-scrollbar-thumb {
+  background: rgb(0 0 0 / 16%);
+  border: 3px solid transparent;
+  border-radius: 10px;
+  background-clip: padding-box;
+}
+:root:root:root body ::-webkit-scrollbar-thumb:hover {
+  background: rgb(0 0 0 / 28%);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+:root:root:root.dark body ::-webkit-scrollbar-thumb { background: rgb(255 255 255 / 20%); background-clip: padding-box; }
+
+/* 14. Grouped panels: gray fill instead of stroke */
+:root:root:root body :where(div, section, article, li)[class~="border"]:not(button) {
+  border-color: transparent !important;
+}
+:root:root:root body :where(div, section, article, li)[class~="border"]:not(button):not([class*="bg-"]) {
+  background-color: var(--fill-head) !important;
+}
+:root:root:root body section[class~="bg-card"][class~="border"] {
+  background: var(--fill-band) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* 15. Selected tiles: tint only, no ring */
+:root:root:root body button[aria-pressed]:not([data-slot]) {
+  box-shadow: none !important;
+}
+
+/* 16. Small icon buttons and alert chips: fill, no stroke */
+:root:root:root body button[class*="rounded-full"][class*="border-border"],
+:root:root:root body button[class*="rounded-full"][class*="bg-card"] {
+  border-color: transparent !important;
+  background: var(--fill-ctl) !important;
+}
+:root:root:root body button[class*="rounded-full"][class*="bg-card"]:not([disabled]):hover {
+  background: var(--fill-ctl-hover) !important;
+}
+:root:root:root body button[class~="border-destructive/40"] {
+  border-color: transparent !important;
+  background: var(--fill-ctl) !important;
+}
+:root:root:root body button[class~="border-destructive/40"]:hover {
+  background: var(--fill-ctl-hover) !important;
+}
+
+/* 17. Bottom status bar: transparent, and lifted out of the layout so the
+   sidebar and content reach the window bottom. The bar becomes a floating
+   overlay; its own controls stay clickable. */
+:root:root:root body [class~="ws-surface-muted"][class~="h-8"] {
+  position: fixed !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  z-index: 40 !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  pointer-events: none !important;
+}
+:root:root:root body [class~="ws-surface-muted"][class~="h-8"] button {
+  pointer-events: auto !important;
+}
+
+/* 18. Sidebar: ZCode-style minimal list */
+:root:root:root body aside,
+:root:root:root body .ws-surface-sidebar {
+  background: #f6f6f8 !important;
+}
+:root:root:root.dark body aside,
+:root:root:root.dark body .ws-surface-sidebar {
+  background: #1c1c1e !important;
+}
+/* Nav rows: tall, airy, regular weight */
+:root:root:root body aside button[class~="rounded-full"][class~="w-full"] {
+  height: 38px !important;
+  border-radius: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+  gap: 10px !important;
+  font-size: 14.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  color: #1d1d1f !important;
+}
+:root:root:root.dark body aside button[class~="rounded-full"][class~="w-full"] { color: #ececec !important; }
+:root:root:root body aside button[class~="rounded-full"][class~="w-full"]:hover { background: rgb(0 0 0 / 5%) !important; }
+:root:root:root.dark body aside button[class~="rounded-full"][class~="w-full"]:hover { background: rgb(255 255 255 / 7%) !important; }
+/* Icons: darker than labels, 16px */
+:root:root:root body aside button[class~="rounded-full"][class~="w-full"] svg {
+  color: #4a4a4f !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+:root:root:root body aside button[class~="rounded-full"][class~="w-full"]:hover svg { color: #1d1d1f !important; }
+:root:root:root.dark body aside button[class~="rounded-full"][class~="w-full"] svg { color: #a8a8ad !important; }
+:root:root:root.dark body aside button[class~="rounded-full"][class~="w-full"]:hover svg { color: #f5f5f7 !important; }
+/* Shortcuts: plain muted text, no chip */
+:root:root:root body aside kbd {
+  background: transparent !important;
+  color: #7f7f86 !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  letter-spacing: 0 !important;
+  height: auto !important;
+  border-radius: 0 !important;
+}
+:root:root:root.dark body aside kbd { color: #86868b !important; }
+/* Quick actions: continuation of the list */
+:root:root:root body aside div[class~="justify-center"][class~="flex-col"] {
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: 8px 6px !important;
+  gap: 2px !important;
+}
+:root:root:root body aside div[class~="justify-center"][class~="flex-col"] > button {
+  width: 100% !important;
+  max-width: none !important;
+  justify-content: flex-start !important;
+  height: 38px !important;
+  border-radius: 10px !important;
+  padding: 0 10px !important;
+  gap: 10px !important;
+  font-size: 14.5px !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.01em !important;
+  color: #1d1d1f !important;
+  background: transparent !important;
+}
+:root:root:root.dark body aside div[class~="justify-center"][class~="flex-col"] > button { color: #ececec !important; }
+:root:root:root body aside div[class~="justify-center"][class~="flex-col"] > button:hover { background: rgb(0 0 0 / 5%) !important; }
+:root:root:root.dark body aside div[class~="justify-center"][class~="flex-col"] > button:hover { background: rgb(255 255 255 / 7%) !important; }
+:root:root:root body aside div[class~="justify-center"][class~="flex-col"] > button svg {
+  color: #4a4a4f !important;
+  width: 16px !important;
+  height: 16px !important;
+}
+:root:root:root body aside div[class~="justify-center"][class~="flex-col"] > button:hover svg { color: #1d1d1f !important; }
+:root:root:root.dark body aside div[class~="justify-center"][class~="flex-col"] > button svg { color: #a8a8ad !important; }
+:root:root:root.dark body aside div[class~="justify-center"][class~="flex-col"] > button:hover svg { color: #f5f5f7 !important; }
+/* Header icons */
+:root:root:root body aside > div:first-child button svg { color: #4a4a4f !important; }
+:root:root:root body aside > div:first-child button:hover { background: rgb(0 0 0 / 5%) !important; }
+:root:root:root body aside > div:first-child button:hover svg { color: #1d1d1f !important; }
+:root:root:root.dark body aside > div:first-child button svg { color: #a8a8ad !important; }
+:root:root:root.dark body aside > div:first-child button:hover { background: rgb(255 255 255 / 7%) !important; }
+
+/* 19. Send button: gray; top bar matches sidebar */
+:root:root:root body .codeg-composer-chrome button[title="发送"] {
+  background: #c9c9ce !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+:root:root:root body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
+  background: #b8b8bf !important;
+}
+:root:root:root.dark body .codeg-composer-chrome button[title="发送"] {
+  background: #4a4a50 !important;
+  color: #e8e8ed !important;
+}
+:root:root:root.dark body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
+  background: #5a5a62 !important;
+}
+/* Top bars match the sidebar surface */
+:root:root:root body [class~="h-10"][class~="bg-muted"][class~="ws-transparent-bg"] {
+  background: #f6f6f8 !important;
+}
+:root:root:root.dark body [class~="h-10"][class~="bg-muted"][class~="ws-transparent-bg"] {
+  background: #1c1c1e !important;
+}
+:root:root:root body [class~="bg-muted/70"][class~="border-b"] {
+  background: #f6f6f8 !important;
+}
+:root:root:root.dark body [class~="bg-muted/70"][class~="border-b"] {
+  background: #1c1c1e !important;
+}
+
+/* 20. Quick-action rail chips: borderless fills, matching the cards below */
+:root:root:root body .qa-rail-viewport button {
+  border-color: transparent !important;
+  background: #f5f5f7 !important;
+  border-radius: 12px !important;
+}
+:root:root:root body .qa-rail-viewport button:not([disabled]):hover {
+  border-color: transparent !important;
+  background: #e9e9ec !important;
+}
+:root:root:root.dark body .qa-rail-viewport button {
+  background: #2a2a2c !important;
+}
+:root:root:root.dark body .qa-rail-viewport button:not([disabled]):hover {
+  background: #363638 !important;
+}
+/* Rail arrows in the same fill family */
+:root:root:root body button[class~="mb-1"][class~="rounded-full"] {
+  border-color: transparent !important;
+  background: #ebecee !important;
+}
+:root:root:root body button[class~="mb-1"][class~="rounded-full"]:not([disabled]):hover {
+  background: #e0e0e4 !important;
+}
+:root:root:root.dark body button[class~="mb-1"][class~="rounded-full"] {
+  background: #303032 !important;
+}
+:root:root:root.dark body button[class~="mb-1"][class~="rounded-full"]:not([disabled]):hover {
+  background: #3b3b3e !important;
+}
+
+/* 21. Hero skill cards: borderless fills, matching the rail chips */
+:root:root:root body [role="tabpanel"] button[class~="text-left"][class~="bg-card/50"] {
+  border-color: transparent !important;
+  background: #f5f5f7 !important;
+  border-radius: 12px !important;
+}
+:root:root:root body [role="tabpanel"] button[class~="text-left"][class~="bg-card/50"]:hover {
+  border-color: transparent !important;
+  background: #ececee !important;
+}
+:root:root:root.dark body [role="tabpanel"] button[class~="text-left"][class~="bg-card/50"] {
+  background: #2a2a2c !important;
+}
+:root:root:root.dark body [role="tabpanel"] button[class~="text-left"][class~="bg-card/50"]:hover {
+  background: #363638 !important;
+}
+
+/* 22. Unify every skill chip, hero card and rail arrow to one fill.
+   Several earlier rules (10, 20, 21) targeted these same buttons with
+   slightly different grays, so raise specificity and set one family. */
+:root:root:root:root:root body [role="tabpanel"] button[class~="bg-card/50"],
+:root:root:root:root:root body [role="tabpanel"] button[title="技能未启用"],
+:root:root:root:root:root body button[class~="mb-1"][class~="rounded-full"] {
+  border-color: transparent !important;
+  background: #f5f5f7 !important;
+  box-shadow: none !important;
+}
+:root:root:root:root:root body [role="tabpanel"] button[class~="bg-card/50"]:hover,
+:root:root:root:root:root body [role="tabpanel"] button[title="技能未启用"]:hover,
+:root:root:root:root:root body button[class~="mb-1"][class~="rounded-full"]:not([disabled]):hover {
+  border-color: transparent !important;
+  background: #e9e9ec !important;
+}
+:root:root:root:root:root.dark body [role="tabpanel"] button[class~="bg-card/50"],
+:root:root:root:root:root.dark body [role="tabpanel"] button[title="技能未启用"],
+:root:root:root:root:root.dark body button[class~="mb-1"][class~="rounded-full"] {
+  border-color: transparent !important;
+  background: #2a2a2c !important;
+}
+:root:root:root:root:root.dark body [role="tabpanel"] button[class~="bg-card/50"]:hover,
+:root:root:root:root:root.dark body [role="tabpanel"] button[title="技能未启用"]:hover,
+:root:root:root:root:root.dark body button[class~="mb-1"][class~="rounded-full"]:not([disabled]):hover {
+  border-color: transparent !important;
+  background: #363638 !important;
+}
+
+/* 23. Dropdown / menu items: simple gray fill, no rings.
+   Section 2's global focus-visible outline matched [role="option"] and
+   painted a blue ring around every highlighted select row. Drop the
+   outline here and keep only a soft fill; also calm the huge radius. */
+:root:root:root:root:root body [data-slot="select-item"],
+:root:root:root:root:root body [data-slot="dropdown-menu-item"],
+:root:root:root:root:root body [data-slot="context-menu-item"],
+:root:root:root:root:root body [data-slot="select-content"] [role="option"],
+:root:root:root:root:root body [role="menuitem"] {
+  outline: none !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+}
+:root:root:root:root:root body [data-slot="select-item"]:focus,
+:root:root:root:root:root body [data-slot="select-item"]:focus-visible,
+:root:root:root:root:root body [data-slot="select-item"][data-highlighted],
+:root:root:root:root:root body [data-slot="dropdown-menu-item"]:focus,
+:root:root:root:root:root body [data-slot="dropdown-menu-item"][data-highlighted],
+:root:root:root:root:root body [data-slot="context-menu-item"]:focus,
+:root:root:root:root:root body [data-slot="context-menu-item"][data-highlighted],
+:root:root:root:root:root body [role="option"]:focus-visible,
+:root:root:root:root:root body [role="menuitem"]:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  background: #f2f2f4 !important;
+  color: #1d1d1f !important;
+}
+:root:root:root:root:root.dark body [data-slot="select-item"]:focus,
+:root:root:root:root:root.dark body [data-slot="select-item"]:focus-visible,
+:root:root:root:root:root.dark body [data-slot="select-item"][data-highlighted],
+:root:root:root:root:root.dark body [data-slot="dropdown-menu-item"]:focus,
+:root:root:root:root:root.dark body [data-slot="dropdown-menu-item"][data-highlighted],
+:root:root:root:root:root.dark body [data-slot="context-menu-item"]:focus,
+:root:root:root:root:root.dark body [data-slot="context-menu-item"][data-highlighted],
+:root:root:root:root:root.dark body [role="option"]:focus-visible,
+:root:root:root:root:root.dark body [role="menuitem"]:focus-visible {
+  background: #38383b !important;
+  color: #f5f5f7 !important;
+}
+/* Tidy the dropdown panel itself */
+:root:root:root:root:root body [data-slot="select-content"] {
+  border-radius: 12px !important;
+  padding: 6px !important;
+  box-shadow: 0 10px 34px rgb(0 0 0 / 12%) !important;
+}
+:root:root:root:root:root.dark body [data-slot="select-content"] {
+  box-shadow: 0 10px 34px rgb(0 0 0 / 55%) !important;
+}
+
+/* 24. Select triggers and comboboxes: soft neutral focus, no blue ring */
+:root:root:root:root:root body [data-slot="select-trigger"]:focus-visible,
+:root:root:root:root:root body [data-slot="select-trigger"][data-state="open"],
+:root:root:root:root:root body [role="combobox"]:focus-visible,
+:root:root:root:root:root body [role="combobox"][data-state="open"] {
+  outline: none !important;
+  border-color: transparent !important;
+  box-shadow: 0 0 0 2px rgb(0 0 0 / 9%) !important;
+  background: #e9e9ec !important;
+}
+:root:root:root:root:root.dark body [data-slot="select-trigger"]:focus-visible,
+:root:root:root:root:root.dark body [data-slot="select-trigger"][data-state="open"],
+:root:root:root:root:root.dark body [role="combobox"]:focus-visible,
+:root:root:root:root:root.dark body [role="combobox"][data-state="open"] {
+  box-shadow: 0 0 0 2px rgb(255 255 255 / 14%) !important;
+  background: #3a3a3d !important;
+}
+
+/* 25. Command palette search: no fill.
+   Section 4's [role="combobox"] rule also matched the command input
+   (role=combobox, its own class says bg-transparent), giving it a gray
+   slab. Reset it to transparent. */
+:root:root:root:root:root body [data-slot="command-input"] {
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+:root:root:root:root:root body [data-slot="command-input"]:focus,
+:root:root:root:root:root body [data-slot="command-input"]:focus-visible {
+  background: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* 26. Panel resize handles: quiet by default, soft on hover/drag.
+   Previously a 1px #e5e5ea line ran the full height and snapped to 5px
+   dark gray on hover. Match the fill-based language instead: the surface
+   step between sidebar and content already divides them, so the line
+   only appears as interaction feedback. */
+:root:root:root:root:root body [role="separator"][data-resize-handle]::before {
+  background: transparent !important;
+}
+:root:root:root:root:root body [role="separator"][data-resize-handle][data-resize-handle-state="hover"] {
+  --resize-handle-thickness: 2px;
+}
+:root:root:root:root:root body [role="separator"][data-resize-handle][data-resize-handle-state="hover"]::before {
+  background: #c7c7cc !important;
+}
+:root:root:root:root:root body [role="separator"][data-resize-handle][data-resize-handle-state="drag"] {
+  --resize-handle-thickness: 3px;
+}
+:root:root:root:root:root body [role="separator"][data-resize-handle][data-resize-handle-state="drag"]::before {
+  background: #aeaeb3 !important;
+}
+:root:root:root:root:root.dark body [role="separator"][data-resize-handle][data-resize-handle-state="hover"]::before {
+  background: #48484b !important;
+}
+:root:root:root:root:root.dark body [role="separator"][data-resize-handle][data-resize-handle-state="drag"]::before {
+  background: #5c5c60 !important;
+}
+
+/* 26b. The handle's own ::before carries a width/background transition, and
+   this webview freezes live background swaps on transitioning elements
+   (same behavior seen on the composer and the switches). Turn it off so the
+   hover/drag fill applies immediately. */
+:root:root:root:root:root body [role="separator"][data-resize-handle]::before,
+:root:root:root:root:root body [role="separator"][data-resize-handle]::after {
+  transition: none !important;
+}
+
+/* 27. Conversation list rows: neutral, aligned with the sidebar rows.
+   Class names taken from the app bundle:
+     wrapper  [data-conv-key] (h-2rem, bg-sidebar)
+     row      .group.rounded-full, active adds bg-sidebar-primary/8
+     title    span.truncate, active adds text-primary (blue)
+     time     span.tabular-nums
+   The blue wash + blue title is what made the list look off; swap it for the
+   same gray fill used everywhere else, and calm the geometry. */
+:root:root:root:root:root body aside [data-conv-key] {
+  background: transparent !important;
+}
+:root:root:root:root:root body aside [data-conv-key] > div {
+  border-radius: 10px !important;
+}
+/* Active row: soft gray fill instead of the blue tint */
+:root:root:root:root:root body aside [data-conv-key] > div[class*="bg-sidebar-primary/8"] {
+  background: rgb(0 0 0 / 6%) !important;
+}
+:root:root:root.dark body aside [data-conv-key] > div[class*="bg-sidebar-primary/8"] {
+  background: rgb(255 255 255 / 11%) !important;
+}
+/* Active title: normal ink, medium weight (not blue) */
+:root:root:root:root:root body aside [data-conv-key] [class*="text-primary"] {
+  color: #1d1d1f !important;
+  font-weight: 500 !important;
+}
+:root:root:root:root:root.dark body aside [data-conv-key] [class*="text-primary"] {
+  color: #f5f5f7 !important;
+}
+/* Titles: consistent metrics */
+:root:root:root:root:root body aside [data-conv-key] span.truncate {
+  font-size: 13.5px !important;
+  letter-spacing: -0.01em !important;
+  color: #303034 !important;
+}
+:root:root:root:root:root.dark body aside [data-conv-key] span.truncate {
+  color: #e8e8ed !important;
+}
+/* Timestamps: quiet, tabular */
+:root:root:root:root:root body aside [data-conv-key] .tabular-nums {
+  font-size: 11.5px !important;
+  color: #7f7f86 !important;
+}
+:root:root:root:root:root.dark body aside [data-conv-key] .tabular-nums {
+  color: #86868b !important;
+}
+/* Nesting rail: keep it as a whisper, clickable area untouched */
+:root:root:root:root:root body aside [data-conv-key] span[aria-hidden][class*="bg-sidebar-border"] {
+  background: rgb(0 0 0 / 8%) !important;
+}
+:root:root:root:root:root.dark body aside [data-conv-key] span[aria-hidden][class*="bg-sidebar-border"] {
+  background: rgb(255 255 255 / 12%) !important;
+}
+/* 28. Sidebar hover: one layer only.
+   The conversation / folder rows already ship their own hover fill on the
+   wrapper, so their inner buttons must not paint a second fill on top.
+   Section headers are labels: no fill at all. Square icon buttons keep a
+   small fill so they still read as clickable. */
+:root:root:root:root:root body aside div[class~="group/header"] > button:hover,
+:root:root:root:root:root body aside button[data-conversation-id]:hover,
+:root:root:root:root:root body aside button[data-folder-id]:hover,
+:root:root:root:root:root body aside button[data-folder-group-id]:hover {
+  background: transparent !important;
+}
+:root:root:root:root:root body aside button[class~="h-6"][class~="w-6"]:hover {
+  background: rgb(0 0 0 / 6%) !important;
+  border-radius: 7px !important;
+}
+:root:root:root:root:root.dark body aside button[class~="h-6"][class~="w-6"]:hover {
+  background: rgb(255 255 255 / 10%) !important;
+}
+/* The show-more row was caught by the nav-row styling; restore its quiet look */
+:root:root:root:root:root body aside div[class~="group/recent-more"] button {
+  height: 31px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+  font-weight: 400 !important;
+  color: #7f7f86 !important;
+  background: transparent !important;
+}
+:root:root:root:root:root body aside div[class~="group/recent-more"] button:hover {
+  background: rgb(0 0 0 / 5%) !important;
+}
+:root:root:root:root:root.dark body aside div[class~="group/recent-more"] button {
+  color: #86868b !important;
+}
+:root:root:root:root:root.dark body aside div[class~="group/recent-more"] button:hover {
+  background: rgb(255 255 255 / 8%) !important;
+}
+
+/* 29. Right-aligned icon buttons (justify-end) must not take a box-sized fill.
+   The folder / conversation action buttons are 24px boxes with the glyph
+   pushed to the right edge (justify-end), so the fill I added looked offset
+   to the left of the icon. Leave those transparent and keep the app's own
+   colour feedback; center-aligned icon buttons keep the symmetric fill. */
+:root:root:root:root:root body aside button[class~="h-6"][class~="w-6"][class~="justify-end"]:hover {
+  background: transparent !important;
+}
+:root:root:root:root:root.dark body aside button[class~="h-6"][class~="w-6"][class~="justify-end"]:hover {
+  background: transparent !important;
+}
+/* 30. Text fields get no drawn focus box.
+   The app's own inputs already carry outline-none and rely on their own
+   wrappers (InputGroup rings, popover rows) for focus feedback. My global
+   focus outline was painting a 2px ring around them, which showed up as a
+   blue box on the token-usage filter search and would have hit every other
+   plain input too. Keep the caret, drop the box. */
+:root:root:root:root:root body input:focus,
+:root:root:root:root:root body input:focus-visible,
+:root:root:root:root:root body textarea:focus,
+:root:root:root:root:root body textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+/* 31. Lift the neutral surfaces: the sidebar, top bars and settings panels
+   were a touch too dim. Brighten the fills one step while keeping every
+   box still readable against the white page (sidebar/top bar #f6f6f8,
+   panels #f8f8fa, inner controls #f0f0f3). */
+:root:root:root:root body aside,
+:root:root:root:root body .ws-surface-sidebar,
+:root:root:root:root body [class~="h-10"][class~="bg-muted"][class~="ws-transparent-bg"],
+:root:root:root:root body [class~="bg-muted/70"][class~="border-b"] {
+  background: #f6f6f8 !important;
+}
+/* 31b. Slightly deepen the shortcut labels so they stay legible on the
+   brightened sidebar (was ~2.6:1, now ~3.6:1). */
