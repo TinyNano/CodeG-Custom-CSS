@@ -24,7 +24,7 @@
   --destructive: #e30000 !important;
   --border: #e5e5ea !important;
   --input: #e5e5ea !important;
-  --ring: #0071e3 !important;
+  --ring: #8e8e93 !important;
   --radius: 0.75rem !important;
   --sidebar: #f5f5f7 !important;
   --sidebar-foreground: #1d1d1f !important;
@@ -33,7 +33,7 @@
   --sidebar-accent: #e8e8ea !important;
   --sidebar-accent-foreground: #1d1d1f !important;
   --sidebar-border: transparent !important;
-  --sidebar-ring: #0071e3 !important;
+  --sidebar-ring: #8e8e93 !important;
   --fill-ctl: #ededf0;
   --fill-ctl-hover: #e2e2e8;
   --switch-off: #e4e4ea;
@@ -67,7 +67,7 @@
   --accent-foreground: #f5f5f7 !important;
   --border: #3a3a3c !important;
   --input: #3a3a3c !important;
-  --ring: #0a84ff !important;
+  --ring: #98989d !important;
   --sidebar: #161618 !important;
   --sidebar-foreground: #f5f5f7 !important;
   --sidebar-primary: #0a84ff !important;
@@ -75,7 +75,7 @@
   --sidebar-accent: #2c2c2e !important;
   --sidebar-accent-foreground: #f5f5f7 !important;
   --sidebar-border: transparent !important;
-  --sidebar-ring: #0a84ff !important;
+  --sidebar-ring: #98989d !important;
   --fill-ctl: #2d2d30;
   --fill-ctl-hover: #3a3a3d;
   --switch-off: #3a3a3e;
@@ -101,7 +101,7 @@
 }
 :root:root:root ::selection { background: rgb(0 113 227 / 18%) !important; }
 :root:root:root.dark ::selection { background: rgb(10 132 255 / 30%) !important; }
-:root:root:root body :where(button, a, input, textarea, select, [role="tab"], [role="textbox"], [role="menuitem"], [role="option"]):focus-visible {
+:root:root:root body :where(button, a, [role="tab"], [role="menuitem"], [role="option"]):focus-visible {
   outline: 2px solid var(--ring) !important;
   outline-offset: 2px !important;
 }
@@ -157,11 +157,11 @@
   background: var(--fill-ctl-hover) !important;
 }
 :root:root:root body button[aria-pressed="true"]:not([data-slot]) {
-  background: rgb(0 113 227 / 12%) !important;
+  background: rgb(0 0 0 / 8%) !important;
   border-color: transparent !important;
 }
 :root:root:root.dark body button[aria-pressed="true"]:not([data-slot]) {
-  background: rgb(10 132 255 / 22%) !important;
+  background: rgb(255 255 255 / 14%) !important;
 }
 
 /* 5. Cards and data tables: fills only */
@@ -784,4 +784,17 @@
 }
 :root:root:root:root:root.dark body aside button[class~="h-6"][class~="w-6"][class~="justify-end"]:hover {
   background: transparent !important;
+}
+/* 30. Text fields get no drawn focus box.
+   The app's own inputs already carry outline-none and rely on their own
+   wrappers (InputGroup rings, popover rows) for focus feedback. My global
+   focus outline was painting a 2px ring around them, which showed up as a
+   blue box on the token-usage filter search and would have hit every other
+   plain input too. Keep the caret, drop the box. */
+:root:root:root:root:root body input:focus,
+:root:root:root:root:root body input:focus-visible,
+:root:root:root:root:root body textarea:focus,
+:root:root:root:root:root body textarea:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
