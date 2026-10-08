@@ -458,21 +458,33 @@
 :root:root:root.dark body aside > div:first-child button svg { color: #a8a8ad !important; }
 :root:root:root.dark body aside > div:first-child button:hover { background: rgb(255 255 255 / 7%) !important; }
 
-/* 19. Send button: gray; top bar matches sidebar */
-:root:root:root body .codeg-composer-chrome button[title="发送"] {
+/* 19. Send button: gray while idle, blue once there is text to send.
+   The button keeps [disabled] until the composer holds content, so the two
+   states can be styled apart - a clear colour jump instead of always-gray. */
+:root:root:root:root body .codeg-composer-chrome button[title="发送"][disabled] {
   background: #c9c9ce !important;
   color: #ffffff !important;
   box-shadow: none !important;
 }
-:root:root:root body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
-  background: #b8b8bf !important;
+:root:root:root:root body .codeg-composer-chrome button[title="发送"]:not([disabled]) {
+  background: #0071e3 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 10px rgb(0 113 227 / 28%) !important;
 }
-:root:root:root.dark body .codeg-composer-chrome button[title="发送"] {
+:root:root:root:root body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
+  background: #0068d1 !important;
+  box-shadow: 0 3px 14px rgb(0 113 227 / 34%) !important;
+}
+:root:root:root:root.dark body .codeg-composer-chrome button[title="发送"][disabled] {
   background: #4a4a50 !important;
   color: #e8e8ed !important;
 }
-:root:root:root.dark body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
-  background: #5a5a62 !important;
+:root:root:root:root.dark body .codeg-composer-chrome button[title="发送"]:not([disabled]) {
+  background: #0a84ff !important;
+  color: #ffffff !important;
+}
+:root:root:root:root.dark body .codeg-composer-chrome button[title="发送"]:not([disabled]):hover {
+  background: #2492ff !important;
 }
 /* Top bars match the sidebar surface */
 :root:root:root body [class~="h-10"][class~="bg-muted"][class~="ws-transparent-bg"] {
@@ -810,3 +822,34 @@
 }
 /* 31b. Slightly deepen the shortcut labels so they stay legible on the
    brightened sidebar (was ~2.6:1, now ~3.6:1). */
+
+/* 33. Tooltips rendered by the app: borderless rounded rectangle.
+   (The plain white boxes with a hairline border are the OS-native title
+   tooltips - those are painted by the browser, outside the page, so CSS
+   can only shape the tooltips the app draws itself, which is this block.) */
+:root:root:root:root:root body [data-slot="tooltip-content"] {
+  border: 0 !important;
+  border-radius: 10px !important;
+  background: #1d1d1f !important;
+  color: #f5f5f7 !important;
+  padding: 7px 11px !important;
+  font-size: 12px !important;
+  line-height: 1.45 !important;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 20%) !important;
+}
+:root:root:root:root:root body [data-slot="tooltip-content"] > span,
+:root:root:root:root:root body [data-slot="tooltip-content"] > svg {
+  background: #1d1d1f !important;
+  fill: #1d1d1f !important;
+  border: 0 !important;
+}
+:root:root:root:root:root.dark body [data-slot="tooltip-content"] {
+  background: #f2f2f4 !important;
+  color: #1d1d1f !important;
+  box-shadow: 0 8px 28px rgb(0 0 0 / 45%) !important;
+}
+:root:root:root:root:root.dark body [data-slot="tooltip-content"] > span,
+:root:root:root:root:root.dark body [data-slot="tooltip-content"] > svg {
+  background: #f2f2f4 !important;
+  fill: #f2f2f4 !important;
+}
