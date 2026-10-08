@@ -773,3 +773,15 @@
 :root:root:root:root:root.dark body aside div[class~="group/recent-more"] button:hover {
   background: rgb(255 255 255 / 8%) !important;
 }
+
+/* 29. Right-aligned icon buttons (justify-end) must not take a box-sized fill.
+   The folder / conversation action buttons are 24px boxes with the glyph
+   pushed to the right edge (justify-end), so the fill I added looked offset
+   to the left of the icon. Leave those transparent and keep the app's own
+   colour feedback; center-aligned icon buttons keep the symmetric fill. */
+:root:root:root:root:root body aside button[class~="h-6"][class~="w-6"][class~="justify-end"]:hover {
+  background: transparent !important;
+}
+:root:root:root:root:root.dark body aside button[class~="h-6"][class~="w-6"][class~="justify-end"]:hover {
+  background: transparent !important;
+}
